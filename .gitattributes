@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+
+std::string calculate_checksum(std::string P, std::string M) {
+    int N = P.length();
+    int Nm = M.length();
+    if (Nm % N != 0) {
+        M.append(N - (Nm % N), '0');
+    }
+
+    std::string MN = M.substr(0, N);
+
+    for (int i = N; i < M.length(); i += N) {
+        char firstBit = MN[0];
+        MN = MN.substr(1) + (firstBit == '1' ? P : M[i]);
+    }
+
+    return MN;
+}
+
+int main() {
+    std::string P = "1011";
+    std::string M = "110101";
+
+    std::string checksum = calculate_checksum(P, M);
+    std::cout << "Контрольная сумма: " << checksum << std::endl;
+
+    return 0;
+}
